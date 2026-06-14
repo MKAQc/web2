@@ -1,24 +1,33 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>webowe</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artykuły</title>
+</head>
+<body>
+    <h1>Lista artykułów</h1>
+
+    <div id="articles"></div>
+
+    <h2>Dodaj artykuł</h2>
+
+    <form id="articleForm">
+        <input type="text" id="title" placeholder="Tytuł" required>
+        <br><br>
+
+        <input type="text" id="subtitle" placeholder="Podtytuł" required>
+        <br><br>
+
+        <input type="text" id="author" placeholder="Autor" required>
+        <br><br>
+
+        <textarea id="content" placeholder="Treść" required></textarea>
+        <br><br>
+
+        <button type="submit">Dodaj artykuł</button>
+    </form>
+
+    <script src="./main.js"></script>
+</body>
 </html>
-<h1 class="text-2xl font-bold text-primary">Kalkulator dni życia</h1>
-
-<form id="form">
-  <input type="date" id="date" required />
-  <button class="bg-blue-300 p-4">Submit</button>
-</form>
-
-<dialog id="dialog" class="bg-gray-200">
-  <button id="close">X</button>
-  <p id="result" class="text-red-600"></p>
-</dialog>

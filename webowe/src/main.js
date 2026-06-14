@@ -1,53 +1,57 @@
-export default {
-  content: ["./index.html", "./src/**/*.{js,ts}"],
-  theme: {
-    extend: {
-      colors: {
-        primary: "#6366f1", // Twój kolor
-      },
-    },
-  },
-  plugins: [],
+const API_URL =
+  "https://ywophzvskzwpntyrpere.supabase.co/rest/v1/article";
+
+const API_KEY =
+  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl3b3BoenZza3p3cG50eXJwZXJlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA0NzU5ODQsImV4cCI6MjA5NjA1MTk4NH0.G4L_69VWAG7ugSyyP5xDAweBeuzUSWMtBFK-FpsArSk;
+
+const articlesDiv = document.getElementById("articles");
+
+loadArticles();
+
+function loadArticles() {
+  fetch(API_URL + "?select=*")
+    .then((response) =>
+      response.json()
+    )
+    .then((articles) => {
+      articlesDiv.innerHTML = "";
+
+      articles.forEach((article) => {
+        articlesDiv.innerHTML += `
+          <hr>
+          <h2>${article.title}</h2>
+          <h3>${article.subtitle}</h3>
+          <p><b>Autor:</b> ${article.author}</p>
+          <p><b>Data:</b> ${article.created_at}</p>
+          <p>${article.content}</p>
+        `;
+      });
+    });
 }
 
-import dayjs from "dayjs"
+document
+  .getElementById("articleForm")
+  .addEventListener("submit", (e) => {
+    e.preventDefault();
 
-document.querySelector("#app").innerHTML = `
-  <h1 class="text-2xl font-bold text-primary">Kalkulator dni życia</h1>
+    const article = {
+      title: document.getElementById("title").value,
+      subtitle: document.getElementById("subtitle").value,
+      author: document.getElementById("author").value,
+      content: document.getElementById("content").value,
+    };
 
-  <form id="form">
-    <input type="date" id="date" />
-    <button class="bg-blue-300 p-4">Submit</button>
-  </form>
-
-  <dialog id="dialog" class="bg-gray-200">
-    <button id="close">X</button>
-    <p id="result" class="text-red-600"></p>
-  </dialog>
-`
-
-const form = document.getElementById("form")
-const input = document.getElementById("date")
-const dialog = document.getElementById("dialog")
-const result = document.getElementById("result")
-const closeBtn = document.getElementById("close")
-
-form.addEventListener("submit", (e) => {
-  e.preventDefault()
-
-  const birth = dayjs(input.value)
-  const today = dayjs()
-
-  const days = today.diff(birth, "day")
-
-  if (birth.date() === today.date() && birth.month() === today.month()) {
-    alert("Wszystkiego najlepszego! 🎉")
-  }
-
-  result.textContent = `Minęło dni: ${days}`
-  dialog.showModal()
-})
-
-closeBtn.addEventListener("click", () => {
-  dialog.close()
-})
+    fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        apikey: API_KEY,
+        Authorization: `Bearer ${API_KEY}`,
+        Prefer: "return=minimal",
+      },
+      body: JSON.stringify(article),
+    }).then(() => {
+      loadArticles();
+      document.getElementById("articleForm").reset();
+    });
+  });
