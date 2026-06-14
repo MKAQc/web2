@@ -2,7 +2,7 @@ const API_URL =
 "https://ywophzvskzwpntyrpere.supabase.co/rest/v1/article";
 
 const API_KEY =
-"TU_ZOSTAW_SWOJ_OBECNY_KLUCZ";
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl3b3BoenZza3p3cG50eXJwZXJlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA0NzU5ODQsImV4cCI6MjA5NjA1MTk4NH0.G4L_69VWAG7ugSyyP5xDAweBeuzUSWMtBFK-FpsArSk";
 
 const articlesDiv = document.getElementById("articles");
 
