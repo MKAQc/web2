@@ -2,14 +2,19 @@ const API_URL =
   "https://ywophzvskzwpntyrpere.supabase.co/rest/v1/article";
 
 const API_KEY =
-  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl3b3BoenZza3p3cG50eXJwZXJlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA0NzU5ODQsImV4cCI6MjA5NjA1MTk4NH0.G4L_69VWAG7ugSyyP5xDAweBeuzUSWMtBFK-FpsArSk;
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl3b3BoenZza3p3cG50eXJwZXJlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA0NzU5ODQsImV4cCI6MjA5NjA1MTk4NH0.G4L_69VWAG7ugSyyP5xDAweBeuzUSWMtBFK-FpsArSk";
 
 const articlesDiv = document.getElementById("articles");
 
 loadArticles();
 
 function loadArticles() {
-  fetch(API_URL + "?select=*")
+  fetch(API_URL + "?select=*", {
+  headers: {
+    apikey: API_KEY,
+    Authorization: `Bearer ${API_KEY}`
+  }
+})
     .then((response) =>
       response.json()
     )
