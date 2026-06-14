@@ -9,11 +9,37 @@ const articlesDiv = document.getElementById("articles");
 loadArticles();
 
 function loadArticles() {
+  console.log("START");
+
   fetch(API_URL + "?select=*", {
-  headers: {
-    apikey: API_KEY,
-    Authorization: `Bearer ${API_KEY}`
-  }
+    headers: {
+      apikey: API_KEY,
+      Authorization: `Bearer ${API_KEY}`
+    }
+  })
+    .then((response) => {
+      console.log("STATUS:", response.status);
+      return response.json();
+    })
+    .then((articles) => {
+      console.log("ARTICLES:", articles);
+
+      articlesDiv.innerHTML = "";
+
+      articles.forEach((article) => {
+        articlesDiv.innerHTML += `
+          <hr>
+          <h2>${article.title}</h2>
+          <h3>${article.subtitle}</h3>
+          <p><b>Autor:</b> ${article.author}</p>
+          <p>${article.content}</p>
+        `;
+      });
+    })
+    .catch((err) => {
+      console.log("ERROR:", err);
+    });
+}
 })
     .then((response) =>
       response.json()
