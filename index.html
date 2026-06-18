@@ -1,0 +1,167 @@
+<<<<<<< HEAD
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://unpkg.com/dayjs"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="p-6">
+
+<h1 class="text-2xl mb-4">Artykuły</h1>
+
+<select id="sort" class="mb-4">
+  <option value="created_at.desc">po dacie malejąco</option>
+  <option value="created_at.asc">po dacie rosnąco</option>
+  <option value="title.asc">alfabetycznie</option>
+</select>
+
+<div id="articles"></div>
+
+<h2 class="mt-8 text-xl">Dodaj artykuł</h2>
+
+<form id="form" class="flex flex-col gap-2">
+  <input placeholder="Title" id="title" required>
+  <input placeholder="Subtitle" id="subtitle">
+  <input placeholder="Author" id="author">
+  <input type="date" id="created_at">
+  <textarea placeholder="Content" id="content"></textarea>
+  <button class="bg-blue-500 text-white p-2">Dodaj</button>
+</form>
+
+<script>
+const URL = "TWÓJ_SUPABASE_URL/rest/v1/article";
+const API_KEY = "TWÓJ_API_KEY";
+
+async function loadArticles(order="created_at.desc") {
+  const res = await fetch(`${URL}?select=*&order=${order}`, {
+    headers: {
+      apikey: API_KEY,
+      Authorization: `Bearer ${API_KEY}`
+    }
+  });
+
+  const data = await res.json();
+
+  document.getElementById("articles").innerHTML = data.map(a => `
+    <div class="border p-4 mb-2">
+      <h2 class="text-lg font-bold">${a.title}</h2>
+      <h3>${a.subtitle}</h3>
+      <p>${a.author} | ${dayjs(a.created_at).format("DD-MM-YYYY")}</p>
+      <p>${a.content}</p>
+    </div>
+  `).join("");
+}
+
+document.getElementById("sort").addEventListener("change", e => {
+  loadArticles(e.target.value);
+});
+
+document.getElementById("form").addEventListener("submit", async e => {
+  e.preventDefault();
+
+  await fetch(URL, {
+    created_at: created_at.value
+    method: "POST",
+    headers: {
+      apikey: API_KEY,
+      Authorization: `Bearer ${API_KEY}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      title: title.value,
+      subtitle: subtitle.value,
+      author: author.value,
+      content: content.value
+    })
+  });
+
+  loadArticles();
+});
+
+loadArticles();
+</script>
+
+</body>
+=======
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="p-6">
+
+<h1 class="text-2xl mb-4">Artykuły</h1>
+
+<select id="sort" class="mb-4">
+  <option value="created_at.desc">po dacie malejąco</option>
+  <option value="created_at.asc">po dacie rosnąco</option>
+  <option value="title.asc">alfabetycznie</option>
+</select>
+
+<div id="articles"></div>
+
+<h2 class="mt-8 text-xl">Dodaj artykuł</h2>
+
+<form id="form" class="flex flex-col gap-2">
+  <input placeholder="Title" id="title" required>
+  <input placeholder="Subtitle" id="subtitle">
+  <input placeholder="Author" id="author">
+  <textarea placeholder="Content" id="content"></textarea>
+  <button class="bg-blue-500 text-white p-2">Dodaj</button>
+</form>
+
+<script>
+const URL = "TWÓJ_SUPABASE_URL/rest/v1/article";
+const API_KEY = "TWÓJ_API_KEY";
+
+async function loadArticles(order="created_at.desc") {
+  const res = await fetch(`${URL}?select=*&order=${order}`, {
+    headers: {
+      apikey: API_KEY,
+      Authorization: `Bearer ${API_KEY}`
+    }
+  });
+
+  const data = await res.json();
+
+  document.getElementById("articles").innerHTML = data.map(a => `
+    <div class="border p-4 mb-2">
+      <h2 class="text-lg font-bold">${a.title}</h2>
+      <h3>${a.subtitle}</h3>
+      <p>${a.author} | ${new Date(a.created_at).toLocaleDateString()}</p>
+      <p>${a.content}</p>
+    </div>
+  `).join("");
+}
+
+document.getElementById("sort").addEventListener("change", e => {
+  loadArticles(e.target.value);
+});
+
+document.getElementById("form").addEventListener("submit", async e => {
+  e.preventDefault();
+
+  await fetch(URL, {
+    method: "POST",
+    headers: {
+      apikey: API_KEY,
+      Authorization: `Bearer ${API_KEY}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      title: title.value,
+      subtitle: subtitle.value,
+      author: author.value,
+      content: content.value
+    })
+  });
+
+  loadArticles();
+});
+
+loadArticles();
+</script>
+
+</body>
+>>>>>>> 2d634599329c0ba77fe3506e77dccbd5af1f8495
+</html>
