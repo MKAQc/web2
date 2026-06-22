@@ -1,3 +1,13 @@
+import { API_URL, API_KEY } from "./config.js";
+
+function loadArticles() {
+  fetch(API_URL + "?select=*", {
+    headers: {
+      apikey: API_KEY,
+      Authorization: `Bearer ${API_KEY}`
+    }
+  })
+}
 function loadArticles() {
   fetch(API_URL + "?select=*", {
     headers: {
